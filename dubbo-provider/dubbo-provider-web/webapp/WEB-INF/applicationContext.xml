@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://code.alibabatech.com/schema/dubbo
+       http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="ignoreResourceNotFound" value="true"/>
+        <property name="locations">
+            <list>
+                <value>
+                    classpath:/config/config.properties
+                </value>
+            </list>
+        </property>
+    </bean>
+    <dubbo:application name="${dubbo.application.name}"></dubbo:application>
+    <dubbo:registry id="dubbo-provider-registry" address="${default.dubbo.registry.address}" check="false"
+                    timeout="${default.dubbo.registry.timeout}"></dubbo:registry>
+    <dubbo:service id="iTestProvider"
+                   interface="com.github.zhaohonglin1995.dubbo.provider.api.ITestProvider"
+                   ref="iTestProviderImpl"></dubbo:service>
+    <dubbo:protocol name="dubbo" port="20880"></dubbo:protocol>
+
+    <bean id="iTestProviderImpl" class="com.github.zhaohonglin1995.dubbo.provider.impl.ITestProviderImpl"></bean>
+</beans>
